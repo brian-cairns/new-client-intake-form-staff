@@ -23,23 +23,11 @@ dob.addEventListener('change', (e) => {
   console.log(newForm.dob);
 })
 
-document.getElementById('clientAge').innerHTML = getAge(intakeDate, dob)
-
-function getAge(date, dob) {
-  let age = 0
-  const dobArray = dob.parse('/')
-  const today = new Date;
-  let year = today.getFullYear()
-  let month = today.getMonth() + 1;
-  let day = today.getDate()
-  if (month > dobArray[0]) { age = year - dobArray[2] - 1 } 
-  if (month !== dobArray[0]) {age = year - dobArray[2]}
-  else {
-    if (day => dobArray[1]) { age = year - dobArray[2] }
-    else {age = year - dobArray[2] + 1}
-  }
-  return age
-}
+let age = document.querySelector('input#age')
+age.addEventListener('change', (e) => {
+	newForm.age = e.target.value;
+  console.log(newForm.age);
+})
 
 let grade = document.querySelector('input#grade')
 grade.addEventListener('change', (e) => {
@@ -71,10 +59,10 @@ diagnosis.addEventListener('change', (e) => {
   console.log(newForm.diagnosis);
 })
 
-let nextSteps1 = document.querySelector('input#nextSteps1')
-nextSteps1.addEventListener('change', (e) => {
-	newForm.nextSteps1 = e.target.value;
-  console.log(newForm.nextSteps1);
+let sensoryNeeds = document.querySelector('input#sensoryNeeds')
+sensoryNeeds.addEventListener('change', (e) => {
+	newForm.sensoryNeeds = e.target.value;
+  console.log(newForm.sensoryNeeds);
 })
 
 let strengths = document.querySelector('input#strengths')
@@ -98,7 +86,7 @@ medicalConditions.addEventListener('change', (e) => {
 let services = document.querySelector('input#services')
 services.addEventListener('change', (e) => {
 	newForm.services = e.target.value;
-  console.log(newForm.nextSteps1);
+  console.log(newForm.services);
 })
 
 let availability = document.querySelector('input#availability')
@@ -113,7 +101,7 @@ hrsOfSupport.addEventListener('change', (e) => {
     console.log(newForm.hrsOfSupport)
 })
     
-let notes = document.querySelector('input#notes')
+let notes = document.getElementById('notes')
 notes.addEventListener('change', (e) => {
     newForm.notes = e.target.value;
     console.log(newForm.notes)
@@ -131,12 +119,10 @@ caregiverSignature.addEventListener('change', (e) => {
     console.log(newForm.caregiverSignature)
 })
     
-document.getElementById('todaysDate') = newForm.intakeDate
-
-let BGL = document.querySelector('input#BGL')
-BGL.addEventListener('change', (e) => {
-    newForm.BGL = e.target.value;
-    console.log(newForm.BGL)
+let todaysDate = document.querySelector('input#todaysDate')
+todaysDate.addEventListener('change', (e) => {
+    newForm.todaysDate = e.target.value;
+    console.log(newForm.todaysDate)
 })
 
 let mathLevel = document.querySelector('input#mathLevel')
@@ -163,11 +149,18 @@ writingLevel.addEventListener('change', (e) => {
     console.log(newForm.writingLevel)
 })
 
-let OGL = document.querySelector('input#OGL')
+let OGL = document.querySelector('input#ogl')
 OGL.addEventListener('change', (e) => {
     newForm.OGL = e.target.value;
     console.log(newForm.OGL)
 })
+
+let BGL = document.querySelector('input#bgl')
+BGL.addEventListener('change', (e) => {
+    newForm.BGL = e.target.value;
+    console.log(newForm.BGL)
+})
+
 
 document.getElementById('submit').addEventListener("click", async (event) => {
   submitForm(newForm, 'newIntakeFormStaff')
