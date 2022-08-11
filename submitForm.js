@@ -180,22 +180,50 @@ async function submitForm(data, form) {
     },
     body: JSON.stringify(document)
   })
-    .then((response) => {
-      if (response.status == 200) {
-      showSuccess()
-      } else {
-        showError(response.body)
-      }
-    })
+    .then(response => response.json())
+    .then(data => respond(data)) 
     .catch((err) => showError(err))
 }
 
-
-function showSuccess() {
-    document.getElementById('returnMessage').innerHTML = 'Form has been successfully submitted'
+function respond(data) {
+  let id = data.key
+  if (id) {
+    showSuccess(id) 
+  } else {
+    showError(data.error)
+  }
 }
+
+function showSuccess(id) {
+  document.getElementById('returnMessage').innerHTML = 'Form has been successfully submitted'
+  printForm.style.display = 'inline';
+  printForm.addEventListener('click', (e) => {
+  location.href = `https://phoenix-freedom-foundation-backend.webflow.io/completed-forms/new-client-intake-form-staff?id=${id}`
+  })
+}
+
 
 function showError(err) {
     console.error
     document.getElementById('returnMessage').innerHTML = `An error occurred when submitting this form, which was ${err}. Please contact the administrator for help.`
 }
+
+
+async function updateClient(clientData) {
+	console.log(clientData)
+  const document = {
+  									data: clientData,
+  									clientName: clientData.clientName
+                    }
+  fetch('https://pffm.azurewebsites.net/updateClient', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin": "*"
+    },
+    body: JSON.stringify(document)
+  })
+    .then(() => console.log('resolved'))
+    .catch(console.error)
+}
+
