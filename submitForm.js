@@ -188,7 +188,10 @@ async function submitForm(data, form) {
 function respond(data) {
   let id = data.key
   if (id) {
-    showSuccess(id) 
+    showSuccess(id)
+    notify(id, data.clientName, 'individual', 'not urgent');
+    notify(id, data.staff, 'individual', 'not urgent')
+    notify(id, 'admin', 'individual', 'not urgent')
   } else {
     showError(data.error)
   }
@@ -227,3 +230,26 @@ async function updateClient(clientData) {
     .catch(console.error)
 }
 
+async function notify(id, recipient, type, priority) {
+  let message = `You have a new <br/><a href=phoenix-freedom-foundation-backend.webflow.io/completed-forms/new-client-intake-form-staff?id=${id}>Completed New Client Intake Form</a>`
+  console.log(message)
+  const url = 'https://pffm.azurewebsites.net/notices'
+  let notification = {
+    'name': recipient,
+    'notice': message,
+    'type': type,
+    'priority': priority
+  }
+  const header = {
+      'Content-Type': 'application/json',
+      "Access-Control-Allow-Origin" : "*"
+  }
+  
+  fetch(url, {
+    method: "POST",
+    headers: header,
+    body: JSON.stringify(notification)
+  })
+    .then(() => console.log('notice sent'))
+    .catch(console.error)
+}
